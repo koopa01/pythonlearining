@@ -97,22 +97,39 @@
 import random						# 导入 random(随机数) 模块
 i = random.randint(0,10)			#使用了 random 模块的 randint() 函数生成随机数
 name_user = input("Welcome to play number guess, what's your name: ")
-print(name_user ,"please guess a number in 0-100: ")
+print(name_user.title(),", please guess a number in 0-100: ") 
+#name_user.title()对nameuser执行方法title()指定的操作
+y = 0
+# while y <= 7:
+	for x in range(7):
+		j = int(input())
+		if j>100 or j<0:								#嵌套判定输入范围
+			print("please insert a number in 0 - 100")
+		else:
+			if j == i:
+				print("bingo, you win")
+				break
+			elif j > i:
+				print("higher")
+			else :
+				print("lower")
 
-for x in range(7):
-	j = int(input())
-	if j>100 or j<0:								#嵌套判定输入范围
-		print("please insert a number in 0 - 100")
-	else:
-		if j == i:
-			print("bingo, you win")
-			break
-		elif j > i:
-			print("higher")
-		else :
-			print("lower")
- # 以后版本其他功能：结束重启，奖励界面
- # if i == j:
- # 	t = input("play again? press "y" end press anyother key)
- # 		if t == "y":
- # 			pass
+#	y += 1
+# 以后版本其他功能：结束重启，奖励界面
+# else:
+# 	print("Sorry you lose. Please try again")
+# 	print("Try again? y/n")
+# 	try_arain = input()
+
+# 	z = 0
+# 	while z == 0:
+# 		if try_again == "y":
+# 		y = 0
+# 	elif:
+# 		try_again == "n"
+# 		print("Thank you for playing. Goodbye. ")
+# 		z += 1
+# 	else:
+# 		print("Please enter 'y' or 'n'")
+
+
