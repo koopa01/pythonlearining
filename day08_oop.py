@@ -25,8 +25,8 @@ def main():
     stu2.study("教python")
     stu2.watch_movie()
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()
 
 # 在Python中，属性和方法的访问权限只有两种，也就是公开的和私有的
 # 如果希望属性是私有的，在给属性命名时可以用两个下划线作为开头
@@ -63,68 +63,96 @@ class Clock(object):
 def main():
     clock = Clock(11,59,59)
     while True:
-        sleep(1)
+
         print(clock.show())
+        sleep(1)
         clock.run()
+
+if __name__ == '__main__':
+    main()
+
+# 定义一个类描述平面上的点并提供移动点和计算到另一个点距离的方法
+# from math import sqrt
+
+
+# class Point(object):
+
+#     def __init__(self, x=0, y=0):
+#         """初始化方法
+        
+#         :param x: 横坐标
+#         :param y: 纵坐标
+#         """
+#         self.x = x
+#         self.y = y
+
+#     def move_to(self, x, y):
+#         """移动到指定位置
+        
+#         :param x: 新的横坐标
+#         "param y: 新的纵坐标
+#         """
+#         self.x = x
+#         self.y = y
+
+#     def move_by(self, dx, dy):
+#         """移动指定的增量
+        
+#         :param dx: 横坐标的增量
+#         "param dy: 纵坐标的增量
+#         """
+#         self.x += dx
+#         self.y += dy
+
+#     def distance_to(self, other):
+#         """计算与另一个点的距离
+        
+#         :param other: 另一个点
+#         """
+#         dx = self.x - other.x
+#         dy = self.y - other.y
+#         return sqrt(dx ** 2 + dy ** 2)
+
+#     def __str__(self):
+#         return '(%s, %s)' % (str(self.x), str(self.y))
+
+
+# def main():
+#     p1 = Point(3, 5)
+#     p2 = Point()
+#     print(p1)
+#     print(p2)
+#     p2.move_by(-1, 2)
+#     print(p2)
+#     print(p1.distance_to(p2))
+
 
 # if __name__ == '__main__':
 #     main()
 
 # 定义一个类描述平面上的点并提供移动点和计算到另一个点距离的方法
 from math import sqrt
-
-
-class Point(object):
-
-    def __init__(self, x=0, y=0):
-        """初始化方法
-        
-        :param x: 横坐标
-        :param y: 纵坐标
-        """
+class Distance(object):
+    """docstring for distance"""
+    def __init__(self,x=0,y=0):
         self.x = x
         self.y = y
-
-    def move_to(self, x, y):
-        """移动到指定位置
-        
-        :param x: 新的横坐标
-        "param y: 新的纵坐标
-        """
-        self.x = x
-        self.y = y
-
-    def move_by(self, dx, dy):
-        """移动指定的增量
-        
-        :param dx: 横坐标的增量
-        "param dy: 纵坐标的增量
-        """
-        self.x += dx
-        self.y += dy
-
-    def distance_to(self, other):
-        """计算与另一个点的距离
-        
-        :param other: 另一个点
-        """
-        dx = self.x - other.x
-        dy = self.y - other.y
-        return sqrt(dx ** 2 + dy ** 2)
-
-    def __str__(self):
-        return '(%s, %s)' % (str(self.x), str(self.y))
-
-
+    def other(self,dx,dy):
+        self.x = dx
+        self.y = dy
+        return self.x,self.y
+    def dist(self,other):
+        dx = other.x - self.x
+        dy = other.y - self.y
+        print(dx,dy)
+        return sqrt(dx**2+dy**2)
+    # def __str__(self):
+    #     return '(%s, %s)' % (str(self.x), str(self.y))
 def main():
-    p1 = Point(3, 5)
-    p2 = Point()
-    print(p1)
-    print(p2)
-    p2.move_by(-1, 2)
-    print(p2)
-    print(p1.distance_to(p2))
+    p1 = Distance(3,4)
+    p2 = Distance()
+    p2.other(5,6)
+    print("%f" % p2.dist(p1))
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
