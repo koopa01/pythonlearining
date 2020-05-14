@@ -22,6 +22,22 @@
 #主键
 表中每一行都应该有一列（或几列）可以唯一标识自己。
 一列（或一组列），其值能够唯一标识表中每一行。
+**注意：**
+记录一旦插入到表中，主键最好不要再修改，因为主键是用来唯一定位记录的，修改了主键，会造成一系列的影响。
+主键不要带有业务含义，而应该使用BIGINT自增或者GUID类型。主键也不应该允许NULL。
+可以使用多个列作为联合主键，但联合主键并不常用。
+可以使用自增类型：BIGINT NOT NULL AUTO_INCREMENT类型
+        全局唯一GUID类型：类似8f55d96b-8acc-4636-8cb8-76bf8abc2f57。GUID算法通过网卡MAC地址、时间戳和随机数保证任意计算机在任意时间生成的字符串都是不同的，大部分编程语言都内置了GUID算法，可以自己预算出主键。
+
+#外键
+外键并不是通过列名实现的，而是通过定义外键约束实现的：
+一个classes的记录可以对应多个students表的记录。
+'''
+ALTER TABLE students
+ADD CONSTRAINT fk_class_id
+FOREIGN KEY (class_id)
+REFERENCES classes (id);
+'''
 
 ###2.什么是SQL
 ---
@@ -158,7 +174,8 @@ WHERE prod_price = 3.49;
 '''
 SELECT vend_id,prod_id,prod_names,prod_price
 From Products
-WHERE vend_id <>'DLL01';
+WHERE vend_id <>'DLL01'
+ORDER BY prod_price,prod_names;
 '''
 **提示：**何时使用引号如果仔细观察上述WHERE子句中的条件，会看到有的值括在单引号内，而有的值未括起来。
 单引号用来限定字符串。如果将值与字符串类型的列进行比较，就需要限定引号。用来与数值列进行比较的值不用引号。
@@ -182,3 +199,26 @@ WHERE cust_name IS NULL;
 通过过滤选择不包含指定值的所有行时，你可能希望返回含NULL值的行。
 但是这做不到。因为未知（unknown）有特殊的含义，数据库不知道它们是否匹配，所以在进行匹配过滤或非匹配过滤时，不会返回这些结果。
 过滤数据时，一定要验证被过滤列中含NULL的行确实出现在返回的数据中。
+
+**注意：**在同时使用ORDER BY和WHERE子句时，应该让ORDER BY位于WHERE之后。
+
+###组合WHERE子句
+SQL允许给出多个WHERE子句。这些子句有两种使用方式，即以AND子句或OR子句的方式使用。
+##AND操作符
+要通过不止一个列进行过滤，可以使用AND操作符给WHERE子句附加条件。
+'''
+SELECT vend_id,prod_names,prod_price
+From Products
+WHERE vend_id = 'DLL01' AND prod_price <= 4;
+'''
+
+
+
+
+
+
+
+
+
+
+
