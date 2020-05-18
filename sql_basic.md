@@ -120,7 +120,7 @@ MySQL、MariaDB和SQLite支持简化版的LIMIT 4 OFFSET 3语句，即LIMIT 3,4�
 ## 排序数据
 在指定一条ORDER BY子句时，应该保证它是SELECT语句中最后一条子句。
 ```
-SELECT prod_id,prod_names,prod_price
+SELECT prod_id,prod_name,prod_price
 From Products
 ORDER BY prod_price,prod_names;
 ```
@@ -131,7 +131,7 @@ ORDER BY prod_price,prod_names;
 **尽量不采用这种方式**
 
 ```
-SELECT prod_id,prod_names,prod_price
+SELECT prod_id,prod_name,prod_price
 From Products
 ORDER BY 2,3;
 ```
@@ -141,7 +141,7 @@ ORDER BY 2,3;
 DESC是DESCENDING的缩写，这两个关键字都可以使用。与DESC相对的是ASC（或ASCENDING）
 
 ```
-SELECT prod_id,prod_names,prod_price
+SELECT prod_id,prod_name,prod_price
 From Products
 ORDER BY prod_price DESC,prod_names;
 ```
@@ -155,7 +155,7 @@ DESC关键字只应用到直接位于其前面的列名。因此，prod_price列
 只检索所需数据需要指定搜索条件（search criteria），搜索条件也称为过滤条件（filter condition）
 在SELECT语句中，数据根据WHERE子句中指定的搜索条件进行过滤。WHERE子句在表名（FROM子句）之后给出。
 ```
-SELECT prod_id,prod_names,prod_price
+SELECT prod_id,prod_name,prod_price
 From Products
 WHERE prod_price = 3.49;
 ```
@@ -177,7 +177,7 @@ WHERE prod_price = 3.49;
 
 ## 不匹配检查
 ```
-SELECT vend_id,prod_id,prod_names,prod_price
+SELECT vend_id,prod_id,prod_name,prod_price
 From Products
 WHERE vend_id <>'DLL01'
 ORDER BY prod_price,prod_names;
@@ -188,7 +188,7 @@ ORDER BY prod_price,prod_names;
 
 ## 范围值检查
 ```
-SELECT prod_names,prod_price
+SELECT prod_name,prod_price
 From Products
 WHERE prod_price BETWEEN 5 AND 10;
 ```
@@ -212,13 +212,143 @@ WHERE cust_name IS NULL;
 # 5.组合WHERE子句
 SQL允许给出多个WHERE子句。这些子句有两种使用方式，即以AND子句或OR子句的方式使用。
 
-## AND操作符
+## AND、OR、BETWEEN操作符
 要通过不止一个列进行过滤，可以使用AND操作符给WHERE子句附加条件。
 ```
 SELECT vend_id,prod_names,prod_price
 From Products
 WHERE vend_id = 'DLL01' AND prod_price <= 4;
 ```
+
+BETWEEN匹配范围中所有的值，包括指定的开始值和结束值。
+
+## IN/NOT IN操作符
+此SELECT语句检索供应商1002和1003制造的所有产品。IN操作符后跟由逗号分隔的合法值清单，整个清单必须括在圆括号中。
+```
+SELECT prod_name,prod_price
+From Products
+WHERE vend_id IN (1002,1003)
+ORDER BY prod_name;
+```
+IN操作符完成与OR相同的功能, IN操作符一般比OR操作符清单执行更快。
+IN的最大优点是可以包含其他SELECT语句，使得能够更动态地建立WHERE子句。第14章将对此进行详细介绍。
+
+## 指定排序方向
+这只是默认的排序顺序，还可以使用ORDER BY子句以降序（从Z到A）顺序排序。为了进行降序排序，必须指定DESC关键字。
+DESC关键字只应用到直接位于其前面的列名。
+想在多个列上进行降序排序，必须对每个列指定DESC关键字。
+
+```
+SELECT prod_name,prod_price,prod_id
+From Products
+ORDER BY prod_price DESC, prod_name
+LIMIT 1,1
+# LIMIT 1 OFFSET 1;
+```
+
+使用ORDER BY和LIMIT的组合，能够找出一个列中最高或最低的值。下面的例子演示如何找出最昂贵物品的值：
+在给出ORDER BY子句时，应该保证它位于FROM子句之后。如果使用LIMIT，它必须位于ORDER BY之后。使用子句的次序不对将产生错误消息。
+
+# 6.用通配符进行过滤
+## LIKE和通配符（% _ ）
+通配符（wildcard）：用来匹配值的一部分的特殊字符。
+搜索模式（search pattern）：由字面值、通配符或两者组合构成的搜索条件。
+前面介绍的所有操作符都是过滤中使用的值都是已知的。例如，怎样搜索产品名中包含文本anvil的所有产品？
+为在搜索子句中使用通配符，必须使用LIKE操作符。(用LIKE也一定要用通配符)
+```
+SELECT prod_name,prod_price
+From Products
+WHERE prod_name LIKE 'jet%'
+# WHERE prod_name LIKE ’%anvil%’ 表示匹配任何位置包含文本anvil的值，而不论它之前或之后出现什么字符。
+```
+此例子使用了搜索模式’jet%'。在执行这条子句时，将检索任意以jet起头的词。 %告诉MySQL接受jet之后的任意字符，不管它有多少字符。
+**注意**：根据MySQL的配置方式，搜索可以是区分大小写的。如果区分大小写，'jet%’与JetPack 1000将不匹配。
+**注意 NULL**：虽然似乎%通配符可以匹配任何东西，但有一个例外，即NULL。即使是WHERE prod_name LIKE '%’也不能匹配用值NULL作为产品名的行。
+下划线（_）通配符：下划线的用途与%一样，但下划线只匹配单个字符而不是多个字符。
+
+MySQL的通配符很有用。但这种功能是有代价的：通配符搜索的处理一般要比前面讨论的其他搜索所花时间更长。
+如没必要，不要用通配符，更不要用在搜索模式的开始处。
+
+# 7.用正则表达式进行搜索
+正则表达式的作用是匹配文本，将一个模式（正则表达式）与一个文本串进行比较。
+## 基本字符匹配
+
+```
+SELECT prod_name,prod_price
+From Products
+WHERE prod_name REGEXP '.000'
+# WHERE prod_name REGEXP '1000|2000'  |表示OR
+ORDER BY prod_name;
+```
+．是正则表达式语言中一个特殊的字符。它表示匹配任意一个字符.
+
+```
+SELECT prod_name,prod_price
+From Products
+WHERE prod_name REGEXP '[123] ton' # 也可以'[1-3] ton'
+ORDER BY prod_name;
+```
+[]是另一种形式的OR语句，正则表达式中尽量不要用OR，因为容易引起歧义，比如'1|2|3 ton'
+\\为转义字符，比如\\. ,\\- ,\\f ,\\\
+
+## 定位符
+元字符 | 说明
+- | - 
+^ | 文本的开始
+$ | 文本的结尾
+[[:<:]] | 词的开始
+[[:>:]] | 词的结尾
+
+例如，如果你想找出以一个数（包括以小数点开始的数）开始的所有产品
+```
+SELECT prod_name
+From Products
+WHERE prod_name REGEXP '^[0-9\\.]'
+ORDER BY prod_name;
+```
+
+## 简单的正则表达式测试
+可以在不使用数据库表的情况下用SELECT来测试正则表达式。REGEXP检查总是返回0（没有匹配）或1（匹配）。
+SELECT 'hello' REGEXP '[0-9]' # 返回0
+
+# 8.创建计算字段
+字段（field）基本上与列（column）的意思相同
+需要返回字段相加、计算、改变格式、改变大小写等需要直接从数据库中检索出转换、计算或格式化过的数据时，使用计算字段。
+可使用Concat()函数来拼接两个列。
+
+```
+SELECT Concat(Rtrim(vend_name), '(' , Rtrim(vend_county) , ')') AS vend_title # vend_title为别名
+From Vendors
+ORDER BY vend_name;
+```
+即格式化输出。
+RTrim()（去掉串右边的空格），LTrim()（去掉串左边的空格），Trim()（去掉串左右两边的空格）。
+
+```
+SELECT prod_id, quantity, item_price,
+       quantity*item_prices AS expanded_price
+From Orderitems
+WHERE order_num = 20005;
+```
+
+# 9.使用数据处理函数
+函数降低可读性从而降低可移植性，要注释。
+customers表中有一个顾客Coyote Inc.，其联系名为Y.Lee。但如果这是输入错误，此联系名实际应该是Y.Lie，怎么办？
+```
+SELECT cust_name, cust_contact
+FROM customers
+WHERE Soundex(cust_contact) = Soundex('Y.Lie') # 它匹配所有发音类似于Y.Lie的联系名
+```
+[更多函数](https://weread.qq.com/web/reader/929321f0715c01b5929bd3fkc7432af0210c74d97b01b1c）
+
+
+
+
+
+
+
+
+
 
 
 
