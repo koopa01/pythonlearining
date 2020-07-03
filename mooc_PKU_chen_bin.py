@@ -141,3 +141,70 @@ alist=list(map(int,input().split()))
 # # print(alist,blist,clist)
 # print(clist)
 print(sorted(alist, key=abs))
+
+
+# 第五章 作业
+# 1.输入一个正整数max，输出100到max之间的所有水仙花数（包括max）。水仙花数是指一个n位数 (n≥3)，它的每个位上的数字的n次幂之和等于它本身。
+max_num = int(input())
+for x in range(100,max_num+1):
+    s = 0
+    nums = list(str(x))
+    n = len(nums)
+    for _ in range(n):
+        nums[_] = int(nums[_])
+    for _ in range(n):
+        s += nums[_]**n
+    if s == x:
+        print(s)
+
+# 2.输入两个字符串，输出两个字符串集合的并集。
+s1 = input()
+s2 = input()
+print(sorted(set(list(s1)+list(s2))))
+
+# 3.给定一个正整数n（n<1000），求所有小于等于n的与7无关的正整数的平方和。
+#   如果一个正整数，它能被7整除或者它的十进制表示法中某个位数上的数字为7，则称之为与7相关的数。
+def isseven(n):
+    m = str(n)
+    if '7' in m:
+        return 0
+    elif n % 7 == 0:
+        return 0
+    else:
+        return 1
+n,s = int(input()),0
+for _ in range(n + 1):
+    if isseven(_):
+        s += _**2
+        # print(_)
+print(s)
+
+# 4.输入一个正整数n（n<1000），输出1到n之间的所有完数（包括n）。
+def perfectnum(n):
+    factor_sum = 0
+    for _ in range(1,n//2+1):
+        if n % _ == 0:
+            factor_sum += _
+    if factor_sum == n:
+        return 1
+    else:
+        return 0
+n = int(input())
+for x in range(1,n):
+    if perfectnum(x):
+        print(x)
+
+# 5.打印一个n层（1<n<20）金字塔，金字塔由“+”构成，塔尖是1个“+”，下一层是3个“+”，居中排列，以此类推。
+level = int(input())
+for x in range(1,level+1):
+    print((level-x)*' ' + (2*x - 1)*'+' + (level-x)*' ')
+
+# 6.给一个5位数，判断它是不是回文数，是则输出yes，不是则输出no。
+n = int(input())
+m = list(str(n))
+if m[0] == m[4] and m[1] == m[3]:
+    print('yes')
+else:
+    print('no')
+
+# 7.
