@@ -106,7 +106,7 @@ class Student(Person):
 # 当子类中出现需要用到变量时：
 class Rabbit(Animal):
     tag = 1   #class中的变量 
-    def__init__(self, age, parent1=None, parent2=None):
+    def __init__(self, age, parent1=None, parent2=None):
         Animal.__init__(self, age)
         self.parent1 = parent1
         self.parent2 = parent2

@@ -58,7 +58,6 @@ def computer_win():
 def gameone():
     toss1 = random.randint(1,6)
     toss2 = random.randint(1,6)
-    a = toss1 + toss2
     if toss1 + toss2 == 7 or toss1 + toss2 == 11:
         player_win()
     elif toss1 + toss2 == 2 or toss1 + toss2 == 3 or toss1 + toss2 == 12:

@@ -1,3 +1,16 @@
+import time
+def measure_time():
+    def wraps(func):
+        def mesure(*args,**kwargs):
+            start = time.time()
+            res = func(*args,**kwargs)
+            end = time.time()
+            # logger.info("function %s use time %s"%(func.__name__,(end-start)))
+            print("function %s use time %s"%(func.__name__,(end-start)))
+            return res
+        return mesure
+    return wraps
+
 # 1、用户从终端输入一个分数，程序输出这个分数所属的考评等级，90到100分是A，60到89是B，60分以下是C。（15分）
 def number():
     while True:
@@ -24,6 +37,7 @@ if __name__ == '__main__':
     number()
 
 # 2、有一分数序列：2/1，3/2，5/3，8/5，13/8，21/13...求出这个数列的前20项之和（15分）
+# @measure_time()
 def feb():
     l1 = [2,3]
     l2 = [1,2]
@@ -46,6 +60,7 @@ print(feb())
 
 # 3、猴子吃桃问题：猴子第一天摘下若干个桃子，当即吃了一半，还不瘾，又多吃了一个第二天早上又将剩下的桃子吃掉一半，又多吃了一个。
 # 以后每天早上都吃了前一天剩下的一半零一个。到第10天早上想再吃时，见只剩下一个桃子了。求第一天共摘了多少。（20分）
+@measure_time()
 def eat(num):
     for day in range(9,0,-1):
         num = (num + 1) * 2
