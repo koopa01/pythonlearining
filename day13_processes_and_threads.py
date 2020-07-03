@@ -23,7 +23,7 @@
 # 而子进程中的返回值永远都是0。Python的os模块提供了fork()函数。由于Windows系统没有fork()调用，
 # 因此要实现跨平台的多进程编程，可以使用multiprocessing模块的Process类来创建子进程，
 # 而且该模块还提供了更高级的封装，例如批量启动进程的进程池（Pool）、用于进程间通信的队列（Queue）和管道（Pipe）等。
-# 在上面的代码中，我们通过Process类创建了进程对象，通过target参数我们传入一个函数来表示进程启动后要执行的代码，
+#在上面的代码中，我们通过Process类创建了进程对象，通过target参数我们传入一个函数来表示进程启动后要执行的代码，
 # 后面的args是一个元组，它代表了传递给函数的参数。Process对象的start方法用来启动进程，而join方法表示等待进程执行结束。
 # 运行下面的代码可以明显发现两个下载任务“同时”启动了，而且程序的执行时间将大大缩短，不再是两个任务的时间总和。下面是程序的一次执行结果。
 
@@ -45,9 +45,10 @@ def main():
     start = time()
     p1 = Process(target=download_task, args=('Python从入门到住院.pdf', ))
     p1.start()
+    p1.join()
     p2 = Process(target=download_task, args=('Peking Hot.avi', ))
     p2.start()
-    p1.join()
+ 
     p2.join()
     end = time()
     print('总共耗费了%.2f秒.' % (end - start))
@@ -213,8 +214,8 @@ Nginx就是支持异步I/O的Web服务器，它在单核CPU上采用单进程模
 '''
 
 # 关于super().__init__()：
-# 子类如果不加super().__init__()，继承自父类，覆盖初始化化def init，增加属性age，不能调用name属性
-# 子类增加super().__init__()，继承自父类，覆盖初始化化def init，并继承初始化属性name，可以调用
+# 如果不加super().__init__()，继承自父类，覆盖初始化化def init，增加属性age，不能调用name属性
+# 增加super().__init__()，继承自父类，覆盖初始化化def init，并继承初始化属性name，可以调用
 
 class DownloadTask(Thread):
     def __init__(self, filename):

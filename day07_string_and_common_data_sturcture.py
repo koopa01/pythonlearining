@@ -306,22 +306,3 @@ def dijitian():
             allday += calendar[x]
     return allday
 print(dijitian())
-print("\n########################################\n")
-
-# 约瑟夫环问题
-allpeople = [True] * 30
-def josephus():
-    died,position,count = 0,0,0
-    while died < 15:
-        if allpeople[position]:
-            count += 1
-            if count == 9:
-                allpeople[position] = False
-                died += 1
-                count = 0
-        position += 1
-        position %= 30
-    # print(allpeople)
-    for x in allpeople:
-        print("基" if x else "非",end = " ")
-josephus()
