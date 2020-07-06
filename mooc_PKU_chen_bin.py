@@ -207,4 +207,36 @@ if m[0] == m[4] and m[1] == m[3]:
 else:
     print('no')
 
-# 7.
+# 7.将列表中的奇数变为它的平方，偶数除以2后打印新的列表（新的列表中所有元素仍都为整数）。
+alist=list(map(int,input().split()))
+for _ in range(len(alist)):
+    if alist[_] & 1 == 1:
+        alist[_] = alist[_] ** 2
+    else:
+        alist[_] = alist[_] // 2
+print(sorted(alist))
+
+# 8.给定一个大于2的正整数n，打印出小于n（不包括n且n不大于100）的所有素数。
+n,result = int(input()),[]
+def isprime(num):
+    for _ in range(2, num // 2 + 1):
+        if num % _ == 0:
+            return 0
+    return 1
+for i in range(2, n):
+    if isprime(i):
+        result.append(i)
+print(result)
+
+# 9.猴子第一天摘下若干个桃子，当即吃了一半，还不过瘾，又多吃了一个第二天早上又将剩下的桃子吃掉一半，又多吃了一个。
+#   以后每天早上都吃了前一天剩下的一半零一个。到第n天（<1<n<11）早上想再吃时，见只剩下一个桃子了。求第一天共摘了多少。
+# def eat(num):
+#     for day in range(9,0,-1):
+#         num = (num + 1) * 2
+#         print(num,"第%d天\n" % day)
+#     return num
+# print("第一天",eat(1))
+n, r = int(input()), 1
+for x in range(n - 1):
+    r = (r + 1) * 2
+print(r)
