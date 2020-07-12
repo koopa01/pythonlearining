@@ -240,3 +240,20 @@ n, r = int(input()), 1
 for x in range(n - 1):
     r = (r + 1) * 2
 print(r)
+
+# 第七章 各个模块
+import datetime,time
+
+print(datetime.date.today())
+print(datetime.date.today().strftime('%Y-%m-%d %H:%M:%S'))
+print(datetime.datetime.now())
+d = datetime.datetime.now()
+print(d.isoformat())
+print(d.timetuple())
+print(time.mktime(d.timetuple()))
+print(datetime.date.fromtimestamp(time.mktime(d.timetuple())))
+
+yesterday = d - datetime.timedelta(days = 1)
+print(yesterday)
+hours = d - datetime.timedelta(hours = -1)
+print(hours)
