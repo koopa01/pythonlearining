@@ -244,16 +244,48 @@ print(r)
 # 第七章 各个模块
 import datetime,time
 
-print(datetime.date.today())
-print(datetime.date.today().strftime('%Y-%m-%d %H:%M:%S'))
-print(datetime.datetime.now())
+print(datetime.date.today())    # 获取今天日期
+print(datetime.date.today().strftime('%Y-%m-%d %H:%M:%S'))    # 格式化字符串输出
+print(datetime.datetime.now())    # 获取今天日期
 d = datetime.datetime.now()
-print(d.isoformat())
-print(d.timetuple())
-print(time.mktime(d.timetuple()))
-print(datetime.date.fromtimestamp(time.mktime(d.timetuple())))
+print(d.isoformat())    # 标准格式，固定宽度
+print(d.timetuple())    # 将日期转化为时间戳，struct_time格式，用元组表示时间的各个数值
+print(time.mktime(d.timetuple()))    # 返回用秒数表示时间的浮点数
+print(datetime.date.fromtimestamp(time.mktime(d.timetuple())))    # 将时间戳转换为日期
 
-yesterday = d - datetime.timedelta(days = 1)
+yesterday = d - datetime.timedelta(days = 1)    # 时间运算（相减）
 print(yesterday)
 hours = d - datetime.timedelta(hours = -1)
 print(hours)
+
+import calendar
+
+print(calendar.month(2020,7))   # 返回该月日历的多行字符串
+calendar.prmonth(2020,7)    # 相当于print(calendar.month(2020,7))
+print(calendar.calendar(2020))    # 返回一年日历
+calendar.prcal(2020)
+print(calendar.monthcalendar(2020,7))   # 返回某一年的某一个月份日历，是一个嵌套列表——最里层列表7个元素表示周一到周日，没有本月的日期为0
+print(calendar.isleap(2020))    # 是否闰年，返回True/False
+print(calendar.monthrange(2020,7))  # 返回元组(这个月从周几开始，这个月有多少天)，周几从0开始表示周一
+print(calendar.weekday(2020,7,13))   # 返回这天是周几
+
+import time
+
+print(time.time())  # 精准机器时间(时间戳)，用作计时，t1 = time.time), t2 = time.time, print(t2 - t1)
+print(time.ctime())     # 字符串表示的当前时间
+
+t = (2020,7,13,10,49,12,0,0,0)
+print(time.asctime(t))     # 将元组转化为日期，不加参数为返回当前时间
+# struct_time类，继承自c语言中的struct类
+print(time.localtime())
+# 输出：time.struct_time(tm_year=2020, tm_mon=7, tm_mday=13, tm_hour=10, tm_min=52, tm_sec=19, tm_wday=0, tm_yday=195, tm_isdst=0)
+t = time.localtime()
+year = t[0]
+print(year)
+# 用例
+for x in range(3):
+    print(x)
+    t1 = time.time()
+    time.sleep(1)
+    t2 = time.time()
+    print(t2 - t1)
