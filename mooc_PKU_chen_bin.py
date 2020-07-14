@@ -241,51 +241,63 @@ for x in range(n - 1):
     r = (r + 1) * 2
 print(r)
 
-# 第七章 各个模块
-import datetime,time
+# 第六章 作业
+# 1.已知斐波拉契数列的前两项都是1，我们定义求斐波拉契数列的第n项（n<=50）的函数为fbnq
+def fbnq(n):
+    l1 = [1,1]
+    for x in range(n-2):
+        l1.append(l1[x]+l1[x+1])
+    return l1.pop()
+n=int(input(""))
+print(fbnq(n))
 
-print(datetime.date.today())    # 获取今天日期
-print(datetime.date.today().strftime('%Y-%m-%d %H:%M:%S'))    # 格式化字符串输出
-print(datetime.datetime.now())    # 获取今天日期
-d = datetime.datetime.now()
-print(d.isoformat())    # 标准格式，固定宽度
-print(d.timetuple())    # 将日期转化为时间戳，struct_time格式，用元组表示时间的各个数值
-print(time.mktime(d.timetuple()))    # 返回用秒数表示时间的浮点数
-print(datetime.date.fromtimestamp(time.mktime(d.timetuple())))    # 将时间戳转换为日期
+# 2.输入两个正整数num1和num2（不超过1000），求它们的最大公约数并输出。
+def hcf(n1,n2):
+    result = []
+    for x in range(1,(n1+n2)//2+1):
+        if n1%x==0 and n2%x==0:
+            result.append(x)
+    return sorted(result).pop()
+num1=int(input(""))
+num2=int(input(""))
+print(hcf(num1,num2))
 
-yesterday = d - datetime.timedelta(days = 1)    # 时间运算（相减）
-print(yesterday)
-hours = d - datetime.timedelta(hours = -1)
-print(hours)
+# 3.输入两个正整数num1和num2（不超过500），求它们的最小公倍数并输出。
+def lcm(n1,n2):
+    if n2 > n1:
+        (n1,n2) = (n2,n1)
+    for x in range(n2,n2*n1+1):
+        if x%n2==0 and x%n1==0:
+            return x
+num1,num2=int(input("")),int(input(""))
+print(lcm(num1,num2))
 
-import calendar
+# 4.求n（n为正整数且n<=20）的阶乘的函数为fact
+def fact(n):
+    s = 1
+    for x in range(1,n+1):
+        s *= x
+    return s
+n=int(input(""))
+print(fact(n))
 
-print(calendar.month(2020,7))   # 返回该月日历的多行字符串
-calendar.prmonth(2020,7)    # 相当于print(calendar.month(2020,7))
-print(calendar.calendar(2020))    # 返回一年日历
-calendar.prcal(2020)
-print(calendar.monthcalendar(2020,7))   # 返回某一年的某一个月份日历，是一个嵌套列表——最里层列表7个元素表示周一到周日，没有本月的日期为0
-print(calendar.isleap(2020))    # 是否闰年，返回True/False
-print(calendar.monthrange(2020,7))  # 返回元组(这个月从周几开始，这个月有多少天)，周几从0开始表示周一
-print(calendar.weekday(2020,7,13))   # 返回这天是周几
+# 5.已知输入为一个列表，列表中的元素都为整数，我们定义冒泡排序函数为bubbleSort，将列表中的元素按从小到大进行排序后得到一个新的列表并输出
+def bubbleSort(alist):
+    for x in range(len(alist)):
+        for y in range(len(alist)):
+            if alist[x] < alist[y]:
+                temp = alist[x]
+                alist[x] = alist[y]
+                alist[y] = temp
+    return alist
+alist=list(map(int,input().split()))
+print(bubbleSort(alist))
 
-import time
+# 6.输入为一个列表，列表中的元素都为整数，我们定义元素筛选函数为foo，
+# 功能是检查获取传入列表对象的所有奇数位索引（注意列表的索引是从0开始的）对应的元素，并将其作为新列表返回给调用者。
+def foo(alist):
+    return alist[1::2]
+alist=list(map(int,input().split()))
+print(foo(alist))
 
-print(time.time())  # 精准机器时间(时间戳)，用作计时，t1 = time.time), t2 = time.time, print(t2 - t1)
-print(time.ctime())     # 字符串表示的当前时间
-
-t = (2020,7,13,10,49,12,0,0,0)
-print(time.asctime(t))     # 将元组转化为日期，不加参数为返回当前时间
-# struct_time类，继承自c语言中的struct类
-print(time.localtime())
-# 输出：time.struct_time(tm_year=2020, tm_mon=7, tm_mday=13, tm_hour=10, tm_min=52, tm_sec=19, tm_wday=0, tm_yday=195, tm_isdst=0)
-t = time.localtime()
-year = t[0]
-print(year)
-# 用例
-for x in range(3):
-    print(x)
-    t1 = time.time()
-    time.sleep(1)
-    t2 = time.time()
-    print(t2 - t1)
+# 第七章 作业
