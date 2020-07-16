@@ -301,3 +301,36 @@ alist=list(map(int,input().split()))
 print(foo(alist))
 
 # 第七章 作业
+# 1.给定年月日，如2019/1/8，打印输出这一天是该年的第几天。
+import time
+
+day = input()
+f = time.strptime(day, '%Y/%m/%d')
+print(f.tm_yday)
+
+# from datetime import *
+
+# d=input()
+# d1=datetime.strptime(d[:4]+'/1/1','%Y/%m/%d')
+# print(d1)
+# d2=datetime.strptime(d,'%Y/%m/%d')
+# print(d2)
+# print((d2-d1).days+1)
+# 要将输入的格式转换成计算机能识别的格式，time.strptime()。tm_yday可以直接得出是今年的第几天。
+# strptime和strftime傻傻分不清楚，strftime是 str-format-time, 时间字符串格式化，即我们看到的格式；
+# strptime是str-parse-time，时间字符串语法化，即计算机理解的格式
+
+# 2.接受一个正整数输入x，打印上述公式的输出值。
+from math import *
+
+x=int(input())
+y=sin(15/180*pi)+(e**x-5*x)/sqrt(x**2+1)-log(3*x)
+print(round(y,10))
+
+# 3.一个特殊的正整数，它加上150后是一个完全平方数，再加上136又是一个完全平方数，求符合条件的最小的一个数。
+n=1
+while True:
+    if int((n+150)**0.5)**2 == (n+150) and int((n+150+136)**0.5)**2 == (n+150+136):
+        print(n)
+        break
+    n=n+1
