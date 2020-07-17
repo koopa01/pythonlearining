@@ -334,3 +334,22 @@ while True:
         print(n)
         break
     n=n+1
+
+# 4.打印出n阶的“叉”，这个叉图案由字符‘+’和‘X’构成，n越大，这个图案也就越大
+n = int(input())
+for x in range(2*n-1):
+    row = ['+']*(2*n-1)
+    row[x],row[-1-x] = 'X','X'
+    print(''.join(row))
+
+# 5.约瑟夫环问题，已知n个人（以编号0，1，2，3...n-1分别表示）围坐在一张圆桌周围。
+#   从编号为0的人开始报数1，数到m的那个人出列；他的下一个人又从1开始报数，数到m的那个人又出列；依此规律重复下去，直到圆桌周围的人全部出列。
+n = int(input())
+m = int(input())
+ln,lout = [i for i in range(n)],[]
+while len(ln) != 0:
+    while len(ln) < m:
+        m -= len(ln)
+    lout.append(ln.pop(m-1))
+    ln = ln[m-1:]+ln[:m-1]
+print(lout)
