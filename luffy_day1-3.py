@@ -37,24 +37,15 @@ elif num < 101:
 import random
 
 employee = [i for i in range(1,301)]
+count = 0
+winner_number_limit = [30,6,3]
 
-lucky_dog = random.sample(employee,30)
-# print(lucky_dog)
-for _ in lucky_dog:
-    employee.remove(_)
-# print(employee)
-    print('恭喜 %03d 号员工获得三等奖，避孕套一盒' % _)
-
-lucky_dog = random.sample(employee,6)
-for _ in lucky_dog:
-    employee.remove(_)
-    print('恭喜 %03d 号员工获得二等奖，Iphone⼿机' % _)
-
-lucky_dog = random.sample(employee,3)
-for _ in lucky_dog:
-    employee.remove(_)
-    print('恭喜 %03d 号员工获得一等奖，泰国5日游' % _)
-# print(len(employee))
+while count < 3:
+    winners = random.sample(employee,winner_number_limit[count])
+    print(winners)
+    for x in winners:
+        employee.remove(x)
+    count += 1
 
 # Day 3
 # 快递分拣⼩程序
