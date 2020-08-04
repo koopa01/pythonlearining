@@ -164,6 +164,18 @@ def hanoi(src, des, mid, n):
 N = eval(input())
 hanoi("A", "C", "B", N)
 
+'''
+lambda函数
+匿名函数，返回函数名作为结果，即返回值就是函数名
+仅用于定义一种简单的，能在一行表达实现的函数
+使用场景应为：某些非常复杂的函数，其中某一个参数是一个函数作为参数来使用的，这种情况使用lambda函数
+<函数名> = lambda <参数>：<表达式>
+'''
+f = lambda x, y : x + y # 两个参数x，y，函数体为返回x+y
+f(10,15) # 25
+f = lambda : "我是lambda表达式中的字符串" # lambda只返回这个字符串
+print(f())
+
 # 第六章 组合数据类型
 s = '中国是一个伟大的国家'
 jieba.lcut(s)# 精确模式
@@ -211,3 +223,27 @@ for _ in s:
 items = list(n.items())
 items.sort(key=lambda x:x[1],reverse=True)
 print(items[0][0])
+
+# 第七章 文件和数据格式化
+f = open('html标签.txt') # 从可执行程序的当前目录起，找/后的目录，可用/或\\
+a = f.read()# f.readline() .readlines() .write() .writelines()
+print(a)
+f.close()
+'''
+ 打开模式：
+r 只读，若不存在则报错
+w 覆盖写，若不存在则创建，存在则完全覆盖
+s 创建写，若不错在则创建，存在则报错
+a 追加写，若不存在则创建，存在则文件后追加内容
+b 二进制文件
+t 文本文件
++ 与r/w/x/a共同使用，在原功能基础上增加同时读写功能
+'''
+
+for _ in f.readlines():
+    print(_)
+# 若文件很大，一次性读入内存时间、存储成本高，则可以逐行处理
+
+# .writelines() :将元素全为字符串的列表写入文件
+# seek(offset) :改变当前文件操作指针的位置,0-文件开头,1-当前位置,2-文件结尾
+f.seek(0) # 回到文件开头
