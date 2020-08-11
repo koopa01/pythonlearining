@@ -258,6 +258,16 @@ w.generate(txt) # 向WordCloud对象w中加载文本txt
 # 输出词云文件
 w.to_file(filename) # 将词云输出为图像文件，.png或.jpg格式，默认400*200
 
+# 词云使用
+f = open("沉默的羔羊.txt",encoding="UTF-8")
+a = f.read()
+f.close()
+ls = jieba.lcut(a)
+txt = " ".join(ls)
+w = wordcloud.WordCloud(width = 1000, height = 700, background_color = "white",font_path = "msyh.ttc")
+w.generate(txt)
+w.to_file("词云.png")
+
 '''
 1.文本的平均列数
 打印输出附件文件的平均列数，计算方法如下：‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‮‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‭‬
@@ -293,3 +303,12 @@ for i in line:
     a=i.split(",")
     a.reverse()
     print(";".join(a))
+
+# 第八章 程序设计方法
+# 设计模式
+# 1.IPO--确定IPO，编写程序，调试程序
+# 2.自顶向下设计思路
+# 3.模块化设计--函数+封装 紧耦合/松耦合 模块内部紧耦合，模块之间松耦合
+# 4.配置化设计--数据和程序分离开 引擎+配置 将可选参数配置化 将程序开发变为配置文件编写，拓展功能但不改变程序 关键在接口设计清晰、灵活、可拓展
+
+# os库 -- 常用路径操作、进程管理、环境参数
