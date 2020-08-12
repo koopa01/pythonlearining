@@ -312,3 +312,102 @@ for i in line:
 # 4.配置化设计--数据和程序分离开 引擎+配置 将可选参数配置化 将程序开发变为配置文件编写，拓展功能但不改变程序 关键在接口设计清晰、灵活、可拓展
 
 # os库 -- 常用路径操作、进程管理、环境参数
+# 操作系统交互功能 -- 常用路径操作、进程管理、环境参数
+
+# 1.路径操作
+# 返回path在当前系统中的绝对路径 absolute
+os.path.abspath("file.txt")
+# C:\\Users\\koopa\\python\\file.txt
+
+# 归一化path的表示形式，统一用\\分隔路径 norm
+os.path.normpath("D://PYE//file.txt")
+# D:\\PYE\\file.txt
+
+# 返回当前系统与文件之间的相对路径 relative
+os.path.relpath("C://PYE//file.ext")
+# ..\\..\\..\\PYE\\file.txt
+
+# 返回path中的目录名称
+os.path.dirname("D://PYE//file.txt")
+# D://PYE
+
+# 返回path中最后文件的名称
+os.path.basename("D://PYE//file.txt")
+# "file.txt"
+
+# 组合path与paths，返回一个路径字符串
+os.path.join("D:/","PYE/file.txt")
+# "D:/PYE/file.txt"
+
+# 判断path对应文件或目录是否存在，返回True或False
+os.path.exists("D://PYE//file.txt")
+# False
+
+# 判断path所对应是否为已存在的文件，返回True或False
+os.path.isfile("D://PYE//file.txt")
+# True
+
+# 判断path所对应是否为已存在的目录，返回True或False
+os.path.isdir("D://PYE//file.txt")
+# False
+
+# 返回path对应文件或目录上一次的访问时间
+os.path.getatime("D://PYE//file.txt")
+# 1518356633.7551725
+# time.ctime(os.path.getatime("D://PYE//file.txt"))
+
+# 返回path对应文件或目录最近一次的修改时间
+os.path.getmtime("D://PYE//file.txt")
+# 1518356633.7551725
+
+# 返回path对应文件或目的创建时间
+os.path.getctime("D://PYE//file.txt")
+# Sun Feb 11 21:43:53 2018
+
+# 返回path对应文件的大小，以字节为单位
+os.path.getsize("D://PYE//file.txt")
+# 180786
+
+# 2.进程管理
+import os
+# 调用计算器
+os.system("C:\\Windows\\System32\\calc.exe")
+# 返回0，表示程序正确运行
+
+# 把图片给画图程序默认打开
+os.system("C:\\Windows\\System32\\mspaint.exe","D:\\PYECourse\\grwordcloud.png")
+# 返回0，表示程序正确运行
+
+# 3.环境参数
+# 修改当前程序操作的路径
+os.chdir("D:")
+# 把当前路径改变为D盘根目录下
+
+# 返回程序的当前路径
+os.getcwd()
+# 'D:\\'
+
+# 获得当前系统登陆用户名称
+os.getlogin()
+# 'koopa'
+
+# 获得当前系统的CPU数量
+os.cpu_count()
+# 8
+
+# 获得n个字节长度的随机字符串，通常用于加解密运算
+os.urandom(10)
+# b'7\xbe\xf2!\xc1=\x01gl\xb3'
+
+# 批量用pip安装
+import os
+libs = {"numpy","matplotlib","pillow","sklearn","requests",\
+        "jieba","beautifulsoup4","wheel","networkx","sympy",\
+        "pyinstaller","django","flask","werobot","pyqt5",\
+        "pandas","pyopengl","pypdf2","docopt","pygame"}
+try:
+    for lib in libs:
+        os.system("pip3 install "+lib)
+    print("Successful")        
+except:
+    print("Failed Somehow")
