@@ -399,6 +399,19 @@ os.cpu_count()
 os.urandom(10)
 # b'7\xbe\xf2!\xc1=\x01gl\xb3'
 
+# 创建新文件夹
+file_path=r"db\\user.txt"
+# 判断路径是否存在
+file_folder = os.path.dirname(file_path)
+if not os.path.exists(file_folder):
+    os.mkdir("db")
+# os.makedirs("db\\xx\\oo") # 生成多个目录
+with open(file_path,mode="w",encoding="utf-8") as f:
+    f.write("abcd")
+
+# 文件重命名
+os.rename("db","sb")
+
 # 批量用pip安装
 import os
 libs = {"numpy","matplotlib","pillow","sklearn","requests",\
