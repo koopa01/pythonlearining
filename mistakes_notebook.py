@@ -56,6 +56,19 @@ func([11,22],33,k1 ='v1',k2 ='v2')
    # f. 如执行 func('武沛齐','金鑫','女神',[11,22,33],**{'k1':'栈'})，请问 args和kwargs的值分别是？
 # arg = ('武沛齐','金鑫','女神',[11,22,33]), kwarg = {'k1':'栈'}
 
+# day 10 - 7. 看代码写结果
+def func(v1):
+    return v1* 2
+
+def bar(arg):
+    msg = "%s 是什么玩意？" %(arg,)
+    print(msg) 
+
+val = func('你')
+data = bar(val)
+print(data) # 你你 是什么玩意？\n None
+
+
 
 
 day 01 - 
