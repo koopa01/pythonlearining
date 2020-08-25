@@ -424,3 +424,66 @@ try:
     print("Successful")        
 except:
     print("Failed Somehow")
+
+# 第九章 python计算生态概览
+'''
+霍兰德人格分析雷达图 —— 霍兰德认为，人格兴趣于职业之间应有一种内在的对应关系
+需求：雷达图方式验证霍兰德人格分析
+输入：个职业人群结合兴趣的调研数据 —— 六类人格特性数值化调研特性分布，从而对比六类人格
+输出：雷达图
+matplotlib - 通用雷达图绘制
+numpy - 多维数据表示
+'''
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.rcParams['font.family']='SimHei'
+radar_labels = np.array(['研究型(I)','艺术型(A)','社会型(S)',\
+                         '企业型(E)','常规型(C)','现实型(R)']) #雷达标签
+nAttr = 6
+data = np.array([[0.40, 0.32, 0.35, 0.30, 0.30, 0.88],
+                 [0.85, 0.35, 0.30, 0.40, 0.40, 0.30],
+                 [0.43, 0.89, 0.30, 0.28, 0.22, 0.30],
+                 [0.30, 0.25, 0.48, 0.85, 0.45, 0.40],
+                 [0.20, 0.38, 0.87, 0.45, 0.32, 0.28],
+                 [0.34, 0.31, 0.38, 0.40, 0.92, 0.28]]) #数据值
+data_labels = ('艺术家', '实验员', '工程师', '推销员', '社会工作者','记事员')
+angles = np.linspace(0, 2*np.pi, nAttr, endpoint=False)
+data = np.concatenate((data, [data[0]]))
+angles = np.concatenate((angles, [angles[0]]))
+fig = plt.figure(facecolor="white")
+plt.subplot(111, polar=True)
+plt.plot(angles,data,'o-', linewidth=1, alpha=0.2)
+plt.fill(angles,data, alpha=0.25)
+plt.thetagrids(angles*180/np.pi, radar_labels)
+plt.figtext(0.52, 0.95, '霍兰德人格分析', ha='center', size=20)
+legend = plt.legend(data_labels, loc=(0.94, 0.80), labelspacing=0.1)
+plt.setp(legend.get_texts(), fontsize='large')
+plt.grid(True)
+plt.savefig('holland_radar.jpg')
+plt.show()
+
+# 1.系统基本信息获取
+'''
+描述
+获取系统的递归深度、当前执行文件路径、系统最大UNICODE编码值等3个信息，并打印输出。‪‬‪‬‪‬‪‬‪‬‮‬‫‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‭‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‮‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‭‬
+输出格式如下：‪‬‪‬‪‬‪‬‪‬‮‬‫‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‭‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‮‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‭‬
+RECLIMIT:<深度>, EXEPATH:<文件路径>, UNICODE:<最大编码值>‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‮‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‭‬
+提示：请在sys标准库中寻找上述功能。‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‮‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‭‬
+'''
+import sys
+print(f'RECLIMIT:{sys.getrecursionlimit()}, EXEPATH:{sys.executable}, UNICODE:{sys.maxunicode}')
+
+# 2.二维数据表格输出 
+'''
+描述
+tabulate能够对二维数据进行表格输出，是Python优秀的第三方计算生态。‪‬‪‬‪‬‪‬‪‬‮‬‫‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‭‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‮‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‫‬‪‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‫‬‪‬‪‬‪‬‪‬‪‬‮‬‪‬‭‬
+'''
+from tabulate import tabulate
+data = [ ["北京理工大学", "985", 2000], \
+         ["清华大学", "985", 3000], \
+         ["大连理工大学", "985", 4000], \
+         ["深圳大学", "211", 2000], \
+         ["沈阳大学", "省本", 2000], \
+    ]
+print(tabulate(data,tablefmt='grid'))
